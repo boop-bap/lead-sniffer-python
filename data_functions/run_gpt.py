@@ -1,3 +1,4 @@
+import asyncio
 import os
 import re
 import sys
@@ -6,25 +7,26 @@ import json
 from openai import OpenAI
 from typechat import TypeChatJsonTranslator, TypeChatValidator, create_openai_language_model
 
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from schemas.lead_schema import LeadTarget as schema
+import answer_schemas.lead_schema as answer_schemas
 
 
 API_KEY = os.getenv("OPENAI_API_KEY")
 
 MODEL = create_openai_language_model(API_KEY, "gpt-3.5-turbo")
-VALIDATOR = TypeChatValidator(schema)
-TRANSLATOR = TypeChatJsonTranslator(MODEL, VALIDATOR, schema)
+VALIDATOR = TypeChatValidator(answer_schemas.LeadTarget)
+TRANSLATOR = TypeChatJsonTranslator(MODEL, VALIDATOR, answer_schemas.LeadTarget)
 
 CLIENT = OpenAI(api_key=API_KEY)
 
 
-def read_json(file_path):
-    with open(file_path, "r") as file:
+def read_json(file_to_read):
+    with open(file_to_read, "r") as file:
         return json.load(file)
 
 
-def getInstructions() -> str:
+def get_instructions() -> str:
     user_instructions = read_json("json/userInstructionsSave.json")["userInstructions"]
 
     gpt_instructions: str = f"""Answer should be as broad and as big as possible with no speculation and really extensively
@@ -44,27 +46,23 @@ def getInstructions() -> str:
     return gpt_instructions
 
 
-async def run_gpt(website: str, recordId: str) -> str:
+async def run_gpt(website: str, record_id: str) -> str:
     print("Running GPT")
-
-    chat_completion = CLIENT.chat.completions.create(
+    client = OpenAI()
+    chat_completion = client.chat.completions.create(
         messages=[
-            {
-                "role": "system",
-                "name": "V1",
-                "content": getInstructions(),
-            },
-            {"role": "user", "content": f"url: {website} id: {recordId}"},
+            {"role": "system", "name": "V1", "content": get_instructions()},
+            {"role": "user", "content": f"url: {website}"},
         ],
         model="gpt-3.5-turbo",
-        temperature=0,  # Higher values means the model will take more risks.
-        max_tokens=1000,  # The maximum number of tokens to generate in the completion. 0-4096
+        temperature=0,
+        max_tokens=1000,
     )
-
-    initial_result: str = chat_completion.choices[0].message.content
+    initial_result = chat_completion.choices[0].message.content
 
     remove_breaks_result = re.sub(r"(\r\n|\n|\r)", " ", initial_result)
 
     final_result = await TRANSLATOR.translate(remove_breaks_result)
+    final_result.value["provided_id"] = record_id
 
     return final_result

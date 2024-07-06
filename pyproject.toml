@@ -12,6 +12,7 @@ openai = "^1.35.8"
 python-dotenv = "^1.0.1"
 typechat = {git = "https://github.com/microsoft/TypeChat", subdirectory = "python"}
 pandas = "^2.2.2"
+openpyxl = "^3.1.5"
 
 
 [build-system]

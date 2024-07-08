@@ -52,6 +52,9 @@ def combine_data(file_data_list, gpt_data):
 
             if gpt_result:
                 combined_item = {**item, **gpt_result}
+
+                del combined_item["provided_id"]
+
                 combined_data.append(combined_item)
 
     return combined_data

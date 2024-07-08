@@ -1,15 +1,14 @@
-import asyncio
 import os
 import re
 import sys
-import json
 
+from modules.json_functions import read_json
 from openai import OpenAI
 from typechat import TypeChatJsonTranslator, TypeChatValidator, create_openai_language_model
-
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import answer_schemas.lead_schema as answer_schemas
+
+
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 API_KEY = os.getenv("OPENAI_API_KEY")
@@ -20,13 +19,8 @@ TRANSLATOR = TypeChatJsonTranslator(MODEL, VALIDATOR, answer_schemas.LeadTarget)
 CLIENT = OpenAI(api_key=API_KEY)
 
 
-def read_json(file_to_read):
-    with open(file_to_read, "r") as file:
-        return json.load(file)
-
-
 def get_instructions() -> str:
-    user_instructions = read_json("json/userInstructionsSave.json")["userInstructions"]
+    user_instructions = read_json("json/instructions.json")["userInstructions"]
 
     gpt_instructions: str = f"""Answer should be as broad and as big as possible with no speculation and really extensively
 

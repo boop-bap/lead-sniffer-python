@@ -3,32 +3,19 @@ import os
 import asyncio
 import pandas as pd
 
-from data_functions.run_gpt import run_gpt
+from modules.run_gpt import run_gpt
 
 
+# Chunk size depends on your rate limit
 def split_array_into_chunks(list, chunk_size: int = 1) -> list[list]:
     return [list[i : i + chunk_size] for i in range(0, len(list), chunk_size)]
 
 
-# def get_data_from_file(path):
-#     if os.path.exists(path):
-#         # Read the file into a DataFrame
-#         data = pd.read_excel(path)
-
-#         # Convert the DataFrame to a list of dictionaries
-#         data_list = data.to_dict(orient="records")
-
-#         return split_array_into_chunks(data_list, 1)
-#     else:
-#         # Raise an exception if the file was not found
-#         raise FileNotFoundError(f"File not found: {path}")
-
-
 def get_data_from_file(file):
-    # Read the file into a DataFrame
     data = pd.read_excel(io.BytesIO(file.read()))
-    # Convert the DataFrame to a list of dictionaries
+
     data_list = data.to_dict(orient="records")
+
     return split_array_into_chunks(data_list, 1)
 
 
@@ -48,7 +35,7 @@ async def get_data_from_gpt(chunk_data):
 
         print(f"Chunk {i+1} of {len(chunk_data)}")
 
-        # Wait for 1 second before processing the next chunk
+        # Wait for 1 second before processing the next chunk. The wait time depends on your OpeanAI API rate limit.
         await asyncio.sleep(1)
 
     return final_results
@@ -84,3 +71,18 @@ def create_excel_file(data_list):
 
     # Write the DataFrame to an Excel file
     file = data.to_excel(file_path, index=False)
+
+
+# get data using path from a server
+# def get_data_from_file(path):
+#     if os.path.exists(path):
+#         # Read the file into a DataFrame
+#         data = pd.read_excel(path)
+
+#         # Convert the DataFrame to a list of dictionaries
+#         data_list = data.to_dict(orient="records")
+
+#         return split_array_into_chunks(data_list, 1)
+#     else:
+#         # Raise an exception if the file was not found
+#         raise FileNotFoundError(f"File not found: {path}")

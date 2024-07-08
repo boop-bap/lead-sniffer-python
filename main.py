@@ -5,7 +5,7 @@ from flask_cors import cross_origin
 from flask import Flask, request, send_from_directory
 
 from dotenv import load_dotenv
-from data_functions.data_functions import combine_data, create_excel_file, get_data_from_file, get_data_from_gpt
+from modules.data_functions import combine_data, create_excel_file, get_data_from_file, get_data_from_gpt
 
 load_dotenv()
 

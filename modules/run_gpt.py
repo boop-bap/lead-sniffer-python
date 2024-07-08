@@ -17,7 +17,6 @@ API_KEY = os.getenv("OPENAI_API_KEY")
 MODEL = create_openai_language_model(API_KEY, "gpt-3.5-turbo")
 VALIDATOR = TypeChatValidator(answer_schemas.LeadTarget)
 TRANSLATOR = TypeChatJsonTranslator(MODEL, VALIDATOR, answer_schemas.LeadTarget)
-
 CLIENT = OpenAI(api_key=API_KEY)
 
 
@@ -56,7 +55,7 @@ async def run_gpt(website: str, record_id: str) -> str:
         ],
         model="gpt-3.5-turbo",
         temperature=0,
-        max_tokens=1000,
+        max_tokens=1000,  # 0 to 4096 on gpt-4o
     )
     initial_result = chat_completion.choices[0].message.content
 

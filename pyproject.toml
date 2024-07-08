@@ -13,6 +13,8 @@ python-dotenv = "^1.0.1"
 typechat = {git = "https://github.com/microsoft/TypeChat", subdirectory = "python"}
 pandas = "^2.2.2"
 openpyxl = "^3.1.5"
+flask = {extras = ["async"], version = "^3.0.3"}
+flask-cors = "^4.0.1"
 
 
 [build-system]

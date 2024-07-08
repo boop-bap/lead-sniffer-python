@@ -1,3 +1,4 @@
+import io
 import os
 import asyncio
 import pandas as pd
@@ -9,18 +10,26 @@ def split_array_into_chunks(list, chunk_size: int = 1) -> list[list]:
     return [list[i : i + chunk_size] for i in range(0, len(list), chunk_size)]
 
 
-def get_data_from_file(path):
-    if os.path.exists(path):
-        # Read the file into a DataFrame
-        data = pd.read_excel(path)
+# def get_data_from_file(path):
+#     if os.path.exists(path):
+#         # Read the file into a DataFrame
+#         data = pd.read_excel(path)
 
-        # Convert the DataFrame to a list of dictionaries
-        data_list = data.to_dict(orient="records")
+#         # Convert the DataFrame to a list of dictionaries
+#         data_list = data.to_dict(orient="records")
 
-        return split_array_into_chunks(data_list, 1)
-    else:
-        # Raise an exception if the file was not found
-        raise FileNotFoundError(f"File not found: {path}")
+#         return split_array_into_chunks(data_list, 1)
+#     else:
+#         # Raise an exception if the file was not found
+#         raise FileNotFoundError(f"File not found: {path}")
+
+
+def get_data_from_file(file):
+    # Read the file into a DataFrame
+    data = pd.read_excel(io.BytesIO(file.read()))
+    # Convert the DataFrame to a list of dictionaries
+    data_list = data.to_dict(orient="records")
+    return split_array_into_chunks(data_list, 1)
 
 
 async def get_data_from_gpt(chunk_data):
@@ -41,7 +50,6 @@ async def get_data_from_gpt(chunk_data):
 
         # Wait for 1 second before processing the next chunk
         await asyncio.sleep(1)
-        print(final_results)
 
     return final_results
 
@@ -75,4 +83,4 @@ def create_excel_file(data_list):
         os.makedirs(folder_path)
 
     # Write the DataFrame to an Excel file
-    data.to_excel(file_path, index=False)
+    file = data.to_excel(file_path, index=False)

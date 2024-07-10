@@ -11,6 +11,7 @@ load_dotenv()
 
 app = Flask(__name__)
 PORT = int(os.environ.get("PORT", 3000))
+print(PORT)
 
 allowed_origins = [
     "http://127.0.0.1:5500",
@@ -86,4 +87,5 @@ def get_user_instructions():
         return f"<p>An error occurred: {str(e)}</p>", 500
 
 
-app.run(port=PORT)
+app.run(port=PORT, host='0.0.0.0')
+

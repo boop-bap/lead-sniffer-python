@@ -1,9 +1,10 @@
 import os
 import re
 
-from modules.json_functions import read_json
 from openai import OpenAI
 from typechat import TypeChatJsonTranslator, TypeChatValidator, create_openai_language_model
+from modules.json_functions import read_json
+
 import answer_schemas.lead_schema as answer_schemas
 
 

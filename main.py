@@ -3,11 +3,9 @@ import os
 from flask_cors import CORS
 from flask import Flask, request, send_from_directory
 
-from dotenv import load_dotenv
 from modules.json_functions import read_json, update_json_instructions
 from modules.data_functions import combine_data, create_excel_file, get_data_from_file, get_data_from_gpt
 
-load_dotenv()
 
 app = Flask(__name__)
 PORT = int(os.environ.get("PORT", 3000))

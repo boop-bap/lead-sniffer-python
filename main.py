@@ -11,7 +11,6 @@ load_dotenv()
 
 app = Flask(__name__)
 PORT = int(os.environ.get("PORT", 3000))
-print(PORT)
 
 allowed_origins = [
     "http://127.0.0.1:5500",
@@ -44,11 +43,12 @@ async def upload_file():
 def update_instructions():
     print("update_instructions")
     try:
-        new_instructions = request.get_json()
+        if request.method == "POST":
+            new_instructions = request.get_json()
 
-        update_json_instructions("instructions", new_instructions)
+            update_json_instructions("instructions", new_instructions)
 
-        return "Instructions updated successfully", 200
+            return "Instructions updated successfully", 200
     except Exception as e:
         return f"<p>An error occurred: {str(e)}</p>", 500
 

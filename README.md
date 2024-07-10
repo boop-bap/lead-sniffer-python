@@ -2,7 +2,7 @@
 
 # Lead Sniffer
 
-A tool to analyze websites for specific business details like catalogs, business type, and model. It's useful for sniffing out potential clients. First, it browses the provided URLs with the given criteria and returns a detailed description of each site. Then, it analyzes the text to see if it meets the criteria and provides the results in the specified format.
+A tool to analyze websites for specific business details like catalogs, business type, and model. It's useful for sniffing out potential clients. First, it browses the provided URLs with the given criteria and returns a detailed description of each site. Then, it analyzes the description text to see if it meets the criteria and provides the results in the specified format.
 
 ## Installing / Getting started with docker
 
@@ -21,9 +21,9 @@ sudo docker run -p 3000:3000 --name yourcontainername --env-file .env yourbuildn
 
 ## Things to consider
 
-This is just the backend for handling provided XLSX files with "Website URL" and "Record ID" as required headers.
+This is the backend for handling provided XLSX files with "Website URL" and "Record ID" as required headers for my use case, since HubSpot exports them that way.
 
-The information is returned in XLSX format
+The information is returned in XLSX format.
 
 ## Headers added on output 
 

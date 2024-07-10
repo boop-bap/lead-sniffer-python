@@ -25,30 +25,27 @@ CORS(app, resources={r"/*": {"origins": allowed_origins}})
 @app.route("/upload", methods=["POST"])
 async def upload_file():
     try:
-        if request.method == "POST":
-            file = list(request.files.values())[0]
-            file_data_list = get_data_from_file(file)
+        file = list(request.files.values())[0]
+        file_data_list = get_data_from_file(file)
 
-            gpt_data = await get_data_from_gpt(file_data_list)
-            combined_data_list = combine_data(file_data_list, gpt_data)
+        gpt_data = await get_data_from_gpt(file_data_list)
+        combined_data_list = combine_data(file_data_list, gpt_data)
 
-            create_excel_file(combined_data_list)
+        create_excel_file(combined_data_list)
 
-            return "<p style='font-size: 24px;'>File uploaded successfully!</p>", 200
+        return "<p style='font-size: 24px;'>File uploaded successfully!</p>", 200
     except Exception as e:
         return f"<p style='font-size: 24px; color: red;'>An error occurred: {str(e)}</p>", 500
 
 
 @app.route("/instructions/update", methods=["POST"])
 def update_instructions():
-    print("update_instructions")
     try:
-        if request.method == "POST":
-            new_instructions = request.get_json()
+        new_instructions = request.get_json()
 
-            update_json_instructions("instructions", new_instructions)
+        update_json_instructions("instructions", new_instructions)
 
-            return "Instructions updated successfully", 200
+        return "Instructions updated successfully", 200
     except Exception as e:
         return f"<p>An error occurred: {str(e)}</p>", 500
 
@@ -57,10 +54,9 @@ def update_instructions():
 @app.route("/download", methods=["GET"])
 def download_file():
     try:
-        if request.method == "GET":
-            filename = "output.xlsx"
+        filename = "output.xlsx"
 
-            return send_from_directory("xlsx_files", filename, as_attachment=True), 200
+        return send_from_directory("xlsx_files", filename, as_attachment=True), 200
     except Exception as e:
         return f"<p>An error occurred: {str(e)}</p>", 500
 
@@ -68,10 +64,9 @@ def download_file():
 @app.route("/instructions/default", methods=["GET"])
 def get_default_instructions():
     try:
-        if request.method == "GET":
-            instructions = read_json("json/instructions.json")["defaultInstructions"]
+        instructions = read_json("json/instructions.json")["defaultInstructions"]
 
-            return instructions, 200
+        return instructions, 200
     except Exception as e:
         return f"<p>An error occurred: {str(e)}</p>", 500
 
@@ -79,10 +74,10 @@ def get_default_instructions():
 @app.route("/instructions/user", methods=["GET"])
 def get_user_instructions():
     try:
-        if request.method == "GET":
-            instructions = read_json("json/instructions.json")["userInstructions"]
+        instructions = read_json("json/instructions.json")["userInstructions"]
 
-            return instructions, 200
+        return instructions, 200
+        
     except Exception as e:
         return f"<p>An error occurred: {str(e)}</p>", 500
 

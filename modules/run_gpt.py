@@ -1,14 +1,10 @@
 import os
 import re
-import sys
 
 from modules.json_functions import read_json
 from openai import OpenAI
 from typechat import TypeChatJsonTranslator, TypeChatValidator, create_openai_language_model
 import answer_schemas.lead_schema as answer_schemas
-
-
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 API_KEY = os.getenv("OPENAI_API_KEY")

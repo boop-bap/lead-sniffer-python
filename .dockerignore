@@ -1,0 +1,7 @@
+# Ignore Docker-related files and directories
+.dockerignore
+.git
+.gitignore
+.vscode
+__pycache__
+

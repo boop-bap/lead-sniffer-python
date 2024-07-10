@@ -1,10 +1,9 @@
 [tool.poetry]
 package-mode = false
-name = "gptpython"
+name = "my-app"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
-readme = "README.md"
+authors = ["Your Name <your.email@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -13,10 +12,9 @@ python-dotenv = "^1.0.1"
 typechat = {git = "https://github.com/microsoft/TypeChat", subdirectory = "python"}
 pandas = "^2.2.2"
 openpyxl = "^3.1.5"
-flask = {extras = ["async"], version = "^3.0.3"}
 flask-cors = "^4.0.1"
-
+flask = "^3.0.3"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

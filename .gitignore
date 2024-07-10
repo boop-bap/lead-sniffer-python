@@ -1,10 +1,5 @@
-build/
-dist/
-out/
 .venv/
 .env*
 
 # Local development and debugging
 **/.vscode/*
-!**/.vscode/launch.json
-**__pycache__**

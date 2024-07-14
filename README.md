@@ -7,7 +7,7 @@ A tool to analyze websites for specific business details like catalogs, business
 ## Installing / Getting started with docker
 
 ```shell
-Create your own .env file in root with your OPENAI_API_KEY and PORT
+create your own .env file in root with your OPENAI_API_KEY and PORT
 ```
 
 ```shell

@@ -1,15 +1,34 @@
-<img src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fanythingpawsable.com%2Fwp-content%2Fuploads%2F2020%2F06%2Fdadjokes.jpg&sp=1725306680T7d9b7b8517fdaa01fe164a38eff795959b3c18621d7d0cdf9f29f90be80e1760" alt="Logo of the project" align="right">
+<img src="https://schertzanimalhospital.com/wp-content/uploads/2018/03/Schertz_iStock-836716796_medium-1024x639.jpg" alt="Logo of the project" align="right">
 
-# Joke API and Blazor monorepo
+# Lead Sniffer
 
-
-Building a clean architecture SOLID RESTful API along with the front-end using .NET. 😊 As a bonus, I’m also teaching my friend, who is studying Computer Science where we both motivate each other and make programming a social thing.
+A tool to analyze websites for specific business details like catalogs, business type, and model. It's useful for sniffing out potential clients. First, it browses the provided URLs with the given criteria and returns a detailed description of each site. Then, it analyzes the description text to see if it meets the criteria and provides the results in the specified format.
 
 ## Installing / Getting started with docker
 
-Coming soon..
+```shell
+create your own .env file in root with your OPENAI_API_KEY and PORT
+```
+
+```shell
+sudo docker build -t yourbuildname .
+```
+
+```shell
+sudo docker run -p 3000:3000 --name yourcontainername --env-file .env yourbuildname
+```
 
 
 ## Things to consider
 
-Im completely new to .NET and C# and this project is for learning ✌️
+This is the backend for handling provided XLSX files with "Website URL" and "Record ID" as required headers for my use case, since HubSpot exports them that way.
+
+The information is returned in XLSX format.
+
+## Headers added on output 
+
+    model: Literal["Retail", "E-commerce", "Both e-commerce and physical stores", "Physical stores"]
+    monthly_or_more_often_published_catalogs: Literal["Yes", "No", "Maybe", "Not sure"]
+    type: Literal["B2B", "B2C", "Both B2B and B2C", "Agency"]
+    online: Literal["Yes", "No"]
+
